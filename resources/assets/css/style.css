@@ -1,0 +1,247 @@
+/* Double Color Ball Plugin Styles - Piggo Children Theme */
+
+:root {
+    /* Piggo Brand Colors */
+    --piggo-blue: #2196f3;
+    --piggo-orange: #ff5722;
+    --piggo-green: #22c55e;
+    --piggo-pink: #ff80ab;
+    --piggo-purple: #ea80fc;
+    --piggo-yellow: #fff176;
+    --piggo-bg-light: #f0f8ff;
+    /* AliceBlue */
+
+    /* Plugin Specific Colors */
+    --dcb-red: #ff5252;
+    --dcb-blue: #448aff;
+    --dcb-primary: var(--piggo-blue);
+    --dcb-secondary: var(--piggo-purple);
+}
+
+body {
+    background-color: var(--piggo-bg-light);
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft YaHei', sans-serif;
+    /* Playful font stack */
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 87, 34, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.1) 0%, transparent 20%);
+    background-attachment: fixed;
+}
+
+/* Glassmorphism Card */
+.piggo-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    padding: 25px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.piggo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+}
+
+/* Buttons */
+.piggo-btn {
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Bouncy transition */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-size: 200% auto;
+}
+
+.piggo-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.piggo-btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background-image: linear-gradient(to right, #2196f3 0%, #4facfe 51%, #2196f3 100%);
+}
+
+.btn-success {
+    background-image: linear-gradient(to right, #22c55e 0%, #a8e063 51%, #22c55e 100%);
+}
+
+.btn-danger {
+    background-image: linear-gradient(to right, #ff5722 0%, #ff9a9e 51%, #ff5722 100%);
+}
+
+/* Animations */
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: rotate(-3deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+.animate-wiggle:hover {
+    animation: wiggle 0.5s ease-in-out infinite;
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Lottery Balls */
+.dcb-ball {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: white;
+    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.dcb-ball:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 15px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: rotate(45deg);
+}
+
+.dcb-ball:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.dcb-ball.red {
+    background: radial-gradient(circle at 30% 30%, #ff8a80, #d32f2f);
+}
+
+.dcb-ball.blue {
+    background: radial-gradient(circle at 30% 30%, #82b1ff, #2962ff);
+}
+
+.dcb-ball.selected {
+    box-shadow: 0 0 15px 5px rgba(255, 235, 59, 0.7);
+    border: 2px solid #fff176;
+    animation: bounce 0.5s;
+}
+
+/* Header & Title */
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.page-title {
+    font-size: 3em;
+    font-weight: 900;
+    background: -webkit-linear-gradient(45deg, var(--piggo-blue), var(--piggo-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+.page-subtitle {
+    color: #666;
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Navigation */
+.dcb-nav {
+    background: white;
+    border-radius: 50px;
+    padding: 10px 20px;
+    display: inline-flex;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.dcb-nav a {
+    padding: 10px 20px;
+    color: #666;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.dcb-nav a:hover,
+.dcb-nav a.active {
+    background: var(--piggo-blue);
+    color: white;
+    box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dcb-ball {
+        width: 35px;
+        height: 35px;
+        font-size: 1em;
+    }
+
+    .page-title {
+        font-size: 2em;
+    }
+}
