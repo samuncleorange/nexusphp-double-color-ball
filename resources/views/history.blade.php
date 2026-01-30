@@ -30,13 +30,13 @@
                 </div>
                 
                 <div class="piggo-card" style="background: linear-gradient(135deg, #ffd700, #ffecb3); color: #856404; padding: 10px 20px; border-radius: 15px; margin: 0; box-shadow: none;">
-                    <div style="font-size: 0.9em; text-transform: uppercase; font-weight: bold;">{{ nexus_trans('dcb::dcb.labels.prize_pool') }}</div>
+                    <div style="font-size: 0.9em; text-transform: uppercase; font-weight: bold;">奖池金额</div>
                     <div style="font-size: 1.5em; font-weight: 900;">{{ number_format($period->prize_pool, 0) }}</div>
                 </div>
             </div>
 
             <div style="margin-bottom: 30px;">
-                <h3 style="text-align: center; color: #666; margin-bottom: 20px;">🎯 {{ nexus_trans('dcb::dcb.labels.winning_numbers') }}</h3>
+                <h3 style="text-align: center; color: #666; margin-bottom: 20px;">🎯 开奖号码</h3>
                 <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                     @foreach($period->red_balls as $ball)
                     <div class="dcb-ball red">{{ $ball }}</div>
@@ -50,7 +50,11 @@
                 @foreach($period->win_details as $level => $details)
                     @if($level !== 'rollover' && isset($details['count']) && $details['count'] > 0)
                     <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; text-align: center; border: 1px solid #eee;">
-                        <div style="color: #666; font-size: 0.9em; margin-bottom: 5px;">{{ nexus_trans("dcb::dcb.win_level.level_{$level}") }}</div>
+                        @php
+                            $levelMap = [1 => '一等奖', 2 => '二等奖', 3 => '三等奖', 4 => '四等奖', 5 => '五等奖', 6 => '六等奖'];
+                            $levelText = isset($levelMap[$level]) ? $levelMap[$level] : "{$level}等奖";
+                        @endphp
+                        <div style="color: #666; font-size: 0.9em; margin-bottom: 5px;">{{ $levelText }}</div>
                         <div style="font-size: 1.2em; font-weight: bold; color: var(--piggo-blue);">{{ $details['count'] }} 注</div>
                         <div style="color: var(--piggo-green); font-size: 0.85em;">
                             💰 {{ number_format($details['per_winner'], 0) }}
@@ -72,7 +76,7 @@
 
             <div style="background: rgba(33, 150, 243, 0.1); padding: 15px; border-radius: 10px; font-size: 0.9em; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                 <div style="color: var(--piggo-blue);">
-                    <strong>🔒 {{ nexus_trans('dcb::dcb.labels.fairness_verification') }}:</strong> 
+                    <strong>🔒 公平性验证:</strong> 
                     区块 #{{ $period->block_height }}
                     <code style="background: rgba(255,255,255,0.5); padding: 2px 5px; border-radius: 4px; margin: 0 5px;">{{ substr($period->block_hash, 0, 10) }}...{{ substr($period->block_hash, -10) }}</code>
                 </div>

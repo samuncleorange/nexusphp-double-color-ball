@@ -32,9 +32,9 @@
     <div class="piggo-card" style="background: linear-gradient(135deg, var(--piggo-pink), var(--piggo-purple)); color: white; border: none;">
         <h2 style="margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">期号: {{ $currentPeriod->period_code }}</h2>
         <div style="font-size: 2em; font-weight: 900; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
-            🏆 {{ number_format($currentPeriod->prize_pool, 2) }}
+            🏆 {{ number_format($currentPeriod->prize_pool, 0) }}
         </div>
-        <p style="margin: 0; opacity: 0.9;">花费: {{ $config['price_per_ticket'] }} / Ticket</p>
+        <p style="margin: 0; opacity: 0.9;">每次花费: {{ $config['price_per_ticket'] }} 魔力值</p>
     </div>
 
     <div class="ball-selector">

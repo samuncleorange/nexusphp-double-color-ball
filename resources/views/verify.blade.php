@@ -6,8 +6,8 @@
 <div class="piggo-card animate-float" style="max-width: 1000px; margin: 0 auto; margin-bottom: 30px;">
     <div class="page-header">
         <div style="font-size: 4em;">🔐</div>
-        <h1 class="page-title">{{ nexus_trans('dcb::dcb.labels.fairness_verify') }}</h1>
-        <p class="page-subtitle">{{ nexus_trans('dcb::dcb.help.fairness_intro') }}</p>
+        <h1 class="page-title">公平性验证</h1>
+        <p class="page-subtitle">本系统采用比特币区块哈希作为随机种子，确保开奖结果公正透明。任何人都可以验证开奖结果。</p>
     </div>
 
     <div class="dcb-nav" style="justify-content: center; width: 100%; box-sizing: border-box;">
@@ -18,7 +18,7 @@
 </div>
 
 <div class="piggo-card" style="max-width: 800px; margin: 0 auto; margin-bottom: 30px; background: #e3f2fd; border: 2px solid #90caf9;">
-    <h3 style="color: var(--piggo-blue); margin-top: 0;">💡 {{ nexus_trans('dcb::dcb.help.how_to_verify_text') }}</h3>
+    <h3 style="color: var(--piggo-blue); margin-top: 0;">💡 输入期号，系统将显示该期使用的比特币区块哈希，并实时计算中奖号码。您可以将其与实际开奖结果进行对比，以验证公平性。</h3>
     <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #555;">
         <li>每期开奖使用开奖时刻后产生的第一个<strong>比特币区块哈希</strong>作为随机种子。</li>
         <li>通过 <code>HMAC-SHA512</code> 算法结合期号生成确定性随机数。</li>
@@ -33,7 +33,7 @@
         <input type="text" id="period_code" name="period_code" placeholder="例如: {{ date('Ymd') }}01" required 
                style="flex: 1; padding: 12px 20px; border-radius: 50px; border: 2px solid #ddd; font-size: 1.1em; outline: none; transition: border-color 0.3s;">
         <button type="submit" class="piggo-btn btn-primary" id="verifyBtn" style="white-space: nowrap;">
-            🔎 {{ nexus_trans('dcb::dcb.buttons.verify') }}
+            🔎 开始验证
         </button>
     </form>
 </div>
@@ -100,7 +100,7 @@
             window.DCB.showToast('网络错误，请重试', 'error');
         } finally {
             verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '🔎 {{ nexus_trans('dcb::dcb.buttons.verify') }}';
+            verifyBtn.innerHTML = '🔎 开始验证';
         }
     });
 
