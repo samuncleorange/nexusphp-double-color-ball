@@ -3,15 +3,14 @@
 namespace NexusPlugin\DoubleColorBall\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Schemas\Schema;
 use NexusPlugin\DoubleColorBall\Models\Period;
 use NexusPlugin\DoubleColorBall\Filament\Resources\PeriodResource\Pages;
-use Filament\Actions\Action;
+use Filament\Tables\Actions\Action;
 use NexusPlugin\DoubleColorBall\Repositories\DrawRepository;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Period Resource
@@ -30,30 +29,30 @@ class PeriodResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return nexus_trans('dcb::dcb.admin.periods');
+        return 'Periods';
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Forms\Components\TextInput::make('period_code')
-                    ->label(nexus_trans('dcb::dcb.labels.period_code'))
+                    ->label('Period Code')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(20),
                 
                 Forms\Components\Select::make('status')
-                    ->label(nexus_trans('dcb::dcb.labels.status'))
+                    ->label('Status')
                     ->options([
-                        Period::STATUS_OPEN => nexus_trans('dcb::dcb.status.open'),
-                        Period::STATUS_CLOSED => nexus_trans('dcb::dcb.status.closed'),
-                        Period::STATUS_DRAWN => nexus_trans('dcb::dcb.status.drawn'),
+                        Period::STATUS_OPEN => 'Open',
+                        Period::STATUS_CLOSED => 'Closed',
+                        Period::STATUS_DRAWN => 'Drawn',
                     ])
                     ->required(),
 
                 Forms\Components\TextInput::make('prize_pool')
-                    ->label(nexus_trans('dcb::dcb.labels.prize_pool'))
+                    ->label('Prize Pool')
                     ->numeric()
                     ->default(0),
             ]);
@@ -68,17 +67,17 @@ class PeriodResource extends Resource
                     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('period_code')
-                    ->label(nexus_trans('dcb::dcb.labels.period_code'))
+                    ->label('Period Code')
                     ->searchable()
                     ->sortable(),
                 
                 Tables\Columns\BadgeColumn::make('status')
-                    ->label(nexus_trans('dcb::dcb.labels.status'))
+                    ->label('Status')
                     ->formatStateUsing(fn ($state) => match($state) {
-                        Period::STATUS_OPEN => nexus_trans('dcb::dcb.status.open'),
-                        Period::STATUS_CLOSED => nexus_trans('dcb::dcb.status.closed'),
-                        Period::STATUS_DRAWN => nexus_trans('dcb::dcb.status.drawn'),
-                        default => nexus_trans('dcb::dcb.status.unknown'),
+                        Period::STATUS_OPEN => 'Open',
+                        Period::STATUS_CLOSED => 'Closed',
+                        Period::STATUS_DRAWN => 'Drawn',
+                        default => 'Unknown',
                     })
                     ->colors([
                         'success' => Period::STATUS_OPEN,
@@ -87,16 +86,16 @@ class PeriodResource extends Resource
                     ]),
                 
                 Tables\Columns\TextColumn::make('prize_pool')
-                    ->label(nexus_trans('dcb::dcb.labels.prize_pool'))
+                    ->label('Prize Pool')
                     ->money('CNY')
                     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('formatted_winning_numbers')
-                    ->label(nexus_trans('dcb::dcb.labels.winning_numbers'))
+                    ->label('Winning Numbers')
                     ->limit(50),
                 
                 Tables\Columns\TextColumn::make('opened_at')
-                    ->label(nexus_trans('dcb::dcb.labels.draw_time'))
+                    ->label('Draw Time')
                     ->dateTime()
                     ->sortable(),
                 
@@ -109,16 +108,16 @@ class PeriodResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                        Period::STATUS_OPEN => nexus_trans('dcb::dcb.status.open'),
-                        Period::STATUS_CLOSED => nexus_trans('dcb::dcb.status.closed'),
-                        Period::STATUS_DRAWN => nexus_trans('dcb::dcb.status.drawn'),
+                        Period::STATUS_OPEN => 'Open',
+                        Period::STATUS_CLOSED => 'Closed',
+                        Period::STATUS_DRAWN => 'Drawn',
                     ]),
             ])
-            ->recordActions([
+            ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Action::make('draw')
-                    ->label(nexus_trans('dcb::dcb.admin.manual_draw'))
+                    ->label('Manual Draw')
                     ->icon('heroicon-o-play')
                     ->requiresConfirmation()
                     ->visible(fn (Period $record) => $record->status !== Period::STATUS_DRAWN)
@@ -128,21 +127,23 @@ class PeriodResource extends Resource
                             $result = $drawRepo->executeDraw($record->id);
                             
                             \Filament\Notifications\Notification::make()
-                                ->title(nexus_trans('dcb::dcb.messages.draw_success'))
+                                ->title('Draw completed successfully')
                                 ->success()
                                 ->send();
                         } catch (\Exception $e) {
-                            Log::error('Manual draw failed', ['error' => $e->getMessage()]);
+                            do_log('Manual draw failed: ' . $e->getMessage(), 'error');
                             
                             \Filament\Notifications\Notification::make()
-                                ->title(nexus_trans('dcb::dcb.messages.draw_failed', ['reason' => $e->getMessage()]))
+                                ->title('Draw failed: ' . $e->getMessage())
                                 ->danger()
                                 ->send();
                         }
                     }),
             ])
-            ->toolbarActions([
-                Tables\Actions\CreateAction::make(),
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ])
             ->defaultSort('created_at', 'desc');
     }
