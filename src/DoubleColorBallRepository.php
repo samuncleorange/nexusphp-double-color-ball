@@ -3,8 +3,6 @@
 namespace NexusPlugin\DoubleColorBall;
 
 use Nexus\Plugin\BasePlugin;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Double Color Ball Repository
@@ -33,7 +31,7 @@ class DoubleColorBallRepository extends BasePlugin
      */
     public function install(): void
     {
-        Log::info('Installing Double Color Ball plugin...');
+        do_log('Installing Double Color Ball plugin...');
 
         try {
             // Run migrations
@@ -41,23 +39,25 @@ class DoubleColorBallRepository extends BasePlugin
             $this->runMigrations($migrationPath);
 
             // Publish config
-            Artisan::call('vendor:publish', [
-                '--tag' => 'dcb-config',
-                '--force' => true,
-            ]);
+            if (function_exists('artisan')) {
+                artisan('vendor:publish', [
+                    '--tag' => 'dcb-config',
+                    '--force' => true,
+                ]);
 
-            // Publish assets
-            Artisan::call('vendor:publish', [
-                '--tag' => 'dcb-assets',
-                '--force' => true,
-            ]);
+                // Publish assets
+                artisan('vendor:publish', [
+                    '--tag' => 'dcb-assets',
+                    '--force' => true,
+                ]);
+            }
 
             // Create initial period
             $this->createInitialPeriod();
 
-            Log::info('Double Color Ball plugin installed successfully');
+            do_log('Double Color Ball plugin installed successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to install Double Color Ball plugin: ' . $e->getMessage());
+            do_log('Failed to install Double Color Ball plugin: ' . $e->getMessage(), 'error');
             throw $e;
         }
     }
@@ -67,16 +67,16 @@ class DoubleColorBallRepository extends BasePlugin
      */
     public function uninstall(): void
     {
-        Log::info('Uninstalling Double Color Ball plugin...');
+        do_log('Uninstalling Double Color Ball plugin...');
 
         try {
             // Rollback migrations
             $migrationPath = __DIR__ . '/../database/migrations';
             $this->runMigrations($migrationPath, true);
 
-            Log::info('Double Color Ball plugin uninstalled successfully');
+            do_log('Double Color Ball plugin uninstalled successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to uninstall Double Color Ball plugin: ' . $e->getMessage());
+            do_log('Failed to uninstall Double Color Ball plugin: ' . $e->getMessage(), 'error');
             throw $e;
         }
     }
@@ -86,10 +86,6 @@ class DoubleColorBallRepository extends BasePlugin
      */
     public function boot(): void
     {
-        Log::info('Double Color Ball plugin booted', [
-            'version' => self::VERSION,
-        ]);
-
         // Register custom business types for bonus logs
         $this->registerBonusBusinessTypes();
     }
@@ -105,10 +101,10 @@ class DoubleColorBallRepository extends BasePlugin
 
             if (!$currentPeriod) {
                 $period = $periodRepo->createPeriod();
-                Log::info('Created initial period', ['period_code' => $period->period_code]);
+                do_log('Created initial period: ' . $period->period_code);
             }
         } catch (\Exception $e) {
-            Log::warning('Failed to create initial period: ' . $e->getMessage());
+            do_log('Failed to create initial period: ' . $e->getMessage(), 'warning');
         }
     }
 
