@@ -26,6 +26,17 @@ return [
         'draw_time' => '开奖时间',
         'block_hash' => '区块哈希',
         'block_height' => '区块高度',
+        'total_winnings' => '累计中奖',
+        'total_spent' => '累计花费',
+        'status' => '状态',
+        'action' => '操作',
+        'view_details' => '查看详情',
+        'details' => '详情',
+        'period' => '期号',
+        'user' => '用户',
+        'amount' => '金额',
+        'created_at' => '创建时间',
+        'updated_at' => '更新时间',
     ],
 
     'status' => [
@@ -37,11 +48,18 @@ return [
 
     'win_level' => [
         'no_win' => '未中奖',
+        'one' => '一等奖',
+        'two' => '二等奖',
+        'three' => '三等奖',
+        'four' => '四等奖',
+        'five' => '五等奖',
+        'six' => '六等奖',
         'level_1' => '一等奖',
         'level_2' => '二等奖',
         'level_3' => '三等奖',
         'level_4' => '四等奖',
         'level_5' => '五等奖',
+        'level_6' => '六等奖',
     ],
 
     'messages' => [
@@ -57,6 +75,8 @@ return [
         'draw_failed' => '开奖失败：:reason',
         'congratulations' => '恭喜中奖！',
         'no_current_period' => '当前没有开放的期号',
+        'verify_success' => '验证成功！',
+        'verify_failed' => '验证失败',
     ],
 
     'notification' => [
@@ -67,11 +87,15 @@ return [
     'buttons' => [
         'buy_now' => '立即购买',
         'clear_selection' => '清空选择',
-        'quick_pick' => '机选',
+        'quick_pick' => '机选一注',
         'view_my_tickets' => '查看我的彩票',
         'view_history' => '开奖历史',
         'verify_fairness' => '验证公平性',
-        'verify' => '验证',
+        'verify' => '开始验证',
+        'back' => '返回',
+        'submit' => '提交',
+        'cancel' => '取消',
+        'confirm' => '确认',
     ],
 
     'admin' => [
@@ -83,10 +107,14 @@ return [
         'game_rules' => '游戏规则',
         'prize_allocation' => '奖金分配',
         'draw_schedule' => '开奖时间',
+        'actions' => '操作',
+        'view' => '查看',
+        'edit' => '编辑',
+        'delete' => '删除',
     ],
 
     'help' => [
-        'how_to_play' => '如何玩',
+        'how_to_play' => '玩法说明',
         'how_to_play_text' => '从 1-:red_max 中选择 :red_count 个红球，从 1-:blue_max 中选择 :blue_count 个蓝球。每注花费 :price 魔力值。',
         'prize_rules' => '奖金规则',
         'fairness_intro' => '本系统采用比特币区块哈希作为随机种子，确保开奖结果公正透明，任何人都可以验证。',
