@@ -129,9 +129,9 @@ class DoubleColorBallServiceProvider extends ServiceProvider
             $timezone = $config['timezone'] ?? 'Asia/Shanghai';
 
             // Schedule weekly draw
+            $dayMethod = \Illuminate\Support\Str::plural($day);
             $schedule->command('dcb:draw')
-                ->weekly()
-                ->$day()
+                ->$dayMethod()
                 ->at($time)
                 ->timezone($timezone)
                 ->onSuccess(function () {
