@@ -51,30 +51,6 @@ class DoubleColorBallServiceProvider extends ServiceProvider
 
         // Publish assets
         $this->registerPublishing();
-
-        // Register Filament resources
-        $this->registerFilament();
-    }
-
-    /**
-     * Register Filament resources.
-     */
-    protected function registerFilament(): void
-    {
-        // Register plugin resources with Filament Panel
-        if (class_exists(\Filament\Facades\Filament::class)) {
-            try {
-                $panel = \Filament\Facades\Filament::getDefaultPanel();
-                if ($panel) {
-                    $panel->discoverResources(
-                        in: __DIR__ . '/Filament/Resources',
-                        for: 'NexusPlugin\\DoubleColorBall\\Filament\\Resources'
-                    );
-                }
-            } catch (\Exception $e) {
-                do_log('Failed to register Filament resources: ' . $e->getMessage(), 'warning');
-            }
-        }
     }
 
     /**
