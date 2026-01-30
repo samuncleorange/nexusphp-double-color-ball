@@ -3,7 +3,6 @@
 namespace NexusPlugin\DoubleColorBall\Repositories;
 
 use App\Models\BonusLogs;
-use App\Repositories\BaseRepository;
 use App\Repositories\BonusRepository;
 use NexusPlugin\DoubleColorBall\Models\Period;
 use NexusPlugin\DoubleColorBall\Models\Ticket;
@@ -15,7 +14,7 @@ use Illuminate\Support\Facades\Log;
  * 
  * Handles ticket purchase and management.
  */
-class TicketRepository extends BaseRepository
+class TicketRepository
 {
     // Define custom business types for double color ball
     // Using 100-199 range to avoid conflicts
@@ -27,7 +26,6 @@ class TicketRepository extends BaseRepository
 
     public function __construct()
     {
-        parent::__construct();
         $this->bonusRepository = new BonusRepository();
         $this->periodRepository = new PeriodRepository();
     }

@@ -2,7 +2,6 @@
 
 namespace NexusPlugin\DoubleColorBall\Repositories;
 
-use App\Repositories\BaseRepository;
 use NexusPlugin\DoubleColorBall\Models\Period;
 use Carbon\Carbon;
 
@@ -11,7 +10,7 @@ use Carbon\Carbon;
  * 
  * Handles period-related business logic.
  */
-class PeriodRepository extends BaseRepository
+class PeriodRepository
 {
     /**
      * Get the current open period.

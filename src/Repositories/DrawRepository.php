@@ -4,7 +4,6 @@ namespace NexusPlugin\DoubleColorBall\Repositories;
 
 use App\Models\BonusLogs;
 use App\Models\User;
-use App\Repositories\BaseRepository;
 use NexusPlugin\DoubleColorBall\Models\Period;
 use NexusPlugin\DoubleColorBall\Models\Ticket;
 use NexusPlugin\DoubleColorBall\Services\ProvablyFairService;
@@ -17,7 +16,7 @@ use Nexus\Database\NexusDB;
  * 
  * Handles the lottery drawing process.
  */
-class DrawRepository extends BaseRepository
+class DrawRepository
 {
     protected ProvablyFairService $provablyFairService;
     protected PrizeCalculator $prizeCalculator;
@@ -26,7 +25,6 @@ class DrawRepository extends BaseRepository
 
     public function __construct()
     {
-        parent::__construct();
         $this->provablyFairService = new ProvablyFairService();
         $this->prizeCalculator = new PrizeCalculator();
         $this->periodRepository = new PeriodRepository();
