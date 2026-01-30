@@ -1,6 +1,6 @@
 @extends('dcb::layouts.app')
 
-@section('title', nexus_trans('dcb::dcb.labels.fairness_verify'))
+@section('title', '公平性验证')
 
 @section('content')
 <div class="piggo-card animate-float" style="max-width: 1000px; margin: 0 auto; margin-bottom: 30px;">
@@ -11,9 +11,9 @@
     </div>
 
     <div class="dcb-nav" style="justify-content: center; width: 100%; box-sizing: border-box;">
-        <a href="{{ route('dcb.index') }}">← {{ nexus_trans('dcb::dcb.buttons.buy_now') }}</a>
-        <a href="{{ route('dcb.my-tickets') }}">{{ nexus_trans('dcb::dcb.buttons.view_my_tickets') }}</a>
-        <a href="{{ route('dcb.history') }}">{{ nexus_trans('dcb::dcb.buttons.view_history') }}</a>
+        <a href="{{ route('dcb.index') }}">← 立即购买</a>
+        <a href="{{ route('dcb.my-tickets') }}">我的彩票</a>
+        <a href="{{ route('dcb.history') }}">开奖历史</a>
     </div>
 </div>
 

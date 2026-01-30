@@ -1,19 +1,19 @@
 @extends('dcb::layouts.app')
 
-@section('title', nexus_trans('dcb::dcb.labels.draw_history'))
+@section('title', '开奖历史')
 
 @section('content')
 <div class="piggo-card animate-float" style="max-width: 1000px; margin: 0 auto; margin-bottom: 30px;">
     <div class="page-header">
         <div style="font-size: 4em;">📜</div>
-        <h1 class="page-title">{{ nexus_trans('dcb::dcb.labels.draw_history') }}</h1>
-        <p class="page-subtitle">{{ nexus_trans('dcb::dcb.description') }}</p>
+        <h1 class="page-title">开奖历史</h1>
+        <p class="page-subtitle">趣味双色球彩票插件</p>
     </div>
 
     <div class="dcb-nav" style="justify-content: center; width: 100%; box-sizing: border-box;">
-        <a href="{{ route('dcb.index') }}">← {{ nexus_trans('dcb::dcb.buttons.buy_now') }}</a>
-        <a href="{{ route('dcb.my-tickets') }}">{{ nexus_trans('dcb::dcb.buttons.view_my_tickets') }}</a>
-        <a href="{{ route('dcb.verify') }}">{{ nexus_trans('dcb::dcb.buttons.verify_fairness') }}</a>
+        <a href="{{ route('dcb.index') }}">← 立即购买</a>
+        <a href="{{ route('dcb.my-tickets') }}">我的彩票</a>
+        <a href="{{ route('dcb.verify') }}">验证公平性</a>
     </div>
 </div>
 
@@ -76,7 +76,7 @@
                     区块 #{{ $period->block_height }}
                     <code style="background: rgba(255,255,255,0.5); padding: 2px 5px; border-radius: 4px; margin: 0 5px;">{{ substr($period->block_hash, 0, 10) }}...{{ substr($period->block_hash, -10) }}</code>
                 </div>
-                <a href="{{ route('dcb.verify') }}" class="piggo-btn btn-primary" style="padding: 5px 15px; font-size: 0.8em; text-decoration: none;">🔍 {{ nexus_trans('dcb::dcb.buttons.verify_fairness') }}</a>
+                <a href="{{ route('dcb.verify') }}" class="piggo-btn btn-primary" style="padding: 5px 15px; font-size: 0.8em; text-decoration: none;">🔍 验证公平性</a>
             </div>
         </div>
         @endforeach

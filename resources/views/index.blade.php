@@ -1,20 +1,20 @@
 @extends('dcb::layouts.app')
 
-@section('title', nexus_trans('dcb::dcb.name'))
+@section('title', '双色球')
 
 @section('content')
 <div class="piggo-card animate-float" style="max-width: 1000px; margin: 0 auto;">
     <div class="page-header">
         <div style="font-size: 5em;">🐷</div>
-        <h1 class="page-title">{{ nexus_trans('dcb::dcb.name') }}</h1>
-        <p class="page-subtitle">{{ nexus_trans('dcb::dcb.description') }}</p>
+        <h1 class="page-title">双色球</h1>
+        <p class="page-subtitle">趣味双色球彩票插件</p>
     </div>
 
     <div class="dcb-nav" style="justify-content: center; width: 100%; box-sizing: border-box;">
-        <a href="{{ route('dcb.index') }}" class="active">{{ nexus_trans('dcb::dcb.name') }}</a>
-        <a href="{{ route('dcb.my-tickets') }}">{{ nexus_trans('dcb::dcb.buttons.view_my_tickets') }}</a>
-        <a href="{{ route('dcb.history') }}">{{ nexus_trans('dcb::dcb.buttons.view_history') }}</a>
-        <a href="{{ route('dcb.verify') }}">{{ nexus_trans('dcb::dcb.buttons.verify_fairness') }}</a>
+        <a href="{{ route('dcb.index') }}" class="active">双色球</a>
+        <a href="{{ route('dcb.my-tickets') }}">我的彩票</a>
+        <a href="{{ route('dcb.history') }}">开奖历史</a>
+        <a href="{{ route('dcb.verify') }}">验证公平性</a>
     </div>
 
     <div class="piggo-card" style="background: rgba(255,255,255,0.6); margin-top: 20px;">
@@ -23,23 +23,23 @@
                 <strong style="font-size: 1.2em; color: var(--piggo-blue);">👋 {{ $user->username }}</strong>
             </div>
             <div class="balance" style="font-size: 1.2em; font-weight: bold; color: var(--piggo-orange);">
-                {{ nexus_trans('dcb::dcb.labels.balance') }}: {{ number_format($user->seedbonus, 2) }} 
+                余额: {{ number_format($user->seedbonus, 2) }} 
             </div>
         </div>
     </div>
 
     @if($currentPeriod)
     <div class="piggo-card" style="background: linear-gradient(135deg, var(--piggo-pink), var(--piggo-purple)); color: white; border: none;">
-        <h2 style="margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">{{ nexus_trans('dcb::dcb.labels.period_code') }}: {{ $currentPeriod->period_code }}</h2>
+        <h2 style="margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">期号: {{ $currentPeriod->period_code }}</h2>
         <div style="font-size: 2em; font-weight: 900; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
             🏆 {{ number_format($currentPeriod->prize_pool, 2) }}
         </div>
-        <p style="margin: 0; opacity: 0.9;">{{ nexus_trans('dcb::dcb.labels.cost') }}: {{ $config['price_per_ticket'] }} / Ticket</p>
+        <p style="margin: 0; opacity: 0.9;">花费: {{ $config['price_per_ticket'] }} / Ticket</p>
     </div>
 
     <div class="ball-selector">
         <div class="ball-group">
-            <h3 style="color: var(--dcb-red);"><span style="display:inline-block;" class="animate-wiggle">🔴</span> {{ nexus_trans('dcb::dcb.messages.select_red_balls', ['count' => $config['game_rules']['red_ball_count'], 'max' => $config['game_rules']['red_ball_max']]) }}</h3>
+            <h3 style="color: var(--dcb-red);"><span style="display:inline-block;" class="animate-wiggle">🔴</span> 请选择 {{ $config['game_rules']['red_ball_count'] }} 个红球 (1-{{ $config['game_rules']['red_ball_max'] }})</h3>
             <div class="balls" id="red-balls" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 20px;">
                 @for($i = 1; $i <= $config['game_rules']['red_ball_max']; $i++)
                 <div class="dcb-ball red" data-number="{{ $i }}" data-type="red">{{ $i }}</div>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="ball-group">
-            <h3 style="color: var(--dcb-blue);"><span style="display:inline-block;" class="animate-wiggle">🔵</span> {{ nexus_trans('dcb::dcb.messages.select_blue_balls', ['count' => $config['game_rules']['blue_ball_count'], 'max' => $config['game_rules']['blue_ball_max']]) }}</h3>
+            <h3 style="color: var(--dcb-blue);"><span style="display:inline-block;" class="animate-wiggle">🔵</span> 请选择 {{ $config['game_rules']['blue_ball_count'] }} 个蓝球 (1-{{ $config['game_rules']['blue_ball_max'] }})</h3>
             <div class="balls" id="blue-balls" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 20px;">
                 @for($i = 1; $i <= $config['game_rules']['blue_ball_max']; $i++)
                 <div class="dcb-ball blue" data-number="{{ $i }}" data-type="blue">{{ $i }}</div>
@@ -58,7 +58,7 @@
     </div>
 
     <div class="piggo-card" style="text-align: center;">
-        <h4 style="color: #666;">{{ nexus_trans('dcb::dcb.labels.select_numbers') }}</h4>
+        <h4 style="color: #666;">已选号码</h4>
         <div class="selected-list" style="font-size: 1.2em; margin: 15px 0;">
             <div style="margin-bottom: 5px;">🔴: <span id="selected-red" style="color: var(--dcb-red); font-weight: bold;">-</span></div>
             <div>🔵: <span id="selected-blue" style="color: var(--dcb-blue); font-weight: bold;">-</span></div>
@@ -66,19 +66,19 @@
     </div>
 
     <div class="buttons" style="display: flex; gap: 20px; justify-content: center; margin: 40px 0;">
-        <button class="piggo-btn btn-danger" onclick="clearSelection()">🧹 {{ nexus_trans('dcb::dcb.buttons.clear_selection') }}</button>
-        <button class="piggo-btn btn-primary" onclick="quickPick()">🎲 {{ nexus_trans('dcb::dcb.buttons.quick_pick') }}</button>
-        <button class="piggo-btn btn-success" onclick="buyTicket()">🛒 {{ nexus_trans('dcb::dcb.buttons.buy_now') }}</button>
+        <button class="piggo-btn btn-danger" onclick="clearSelection()">🧹 清空选择</button>
+        <button class="piggo-btn btn-primary" onclick="quickPick()">🎲 机选一注</button>
+        <button class="piggo-btn btn-success" onclick="buyTicket()">🛒 立即购买</button>
     </div>
     @else
     <div class="piggo-card" style="background: #ffebee; color: #c62828; text-align: center;">
-        <h3>🚫 {{ nexus_trans('dcb::dcb.messages.no_current_period') }}</h3>
+        <h3>🚫 当前没有开放的期号</h3>
     </div>
     @endif
 
     @if($recentPeriods->count() > 0)
     <div class="recent-draws" style="margin-top: 50px;">
-        <h3 style="text-align: center; color: var(--piggo-purple);">📜 {{ nexus_trans('dcb::dcb.labels.draw_history') }}</h3>
+        <h3 style="text-align: center; color: var(--piggo-purple);">📜 开奖历史</h3>
         @foreach($recentPeriods as $period)
         @if($period->isDrawn())
         <div class="piggo-card" style="padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
